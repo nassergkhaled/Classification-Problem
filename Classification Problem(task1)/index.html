@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<style>
+		body {
+		background-color:#9f6c7d
+		 /* #817979; */
+		
+		}
+		</style>
+		<title>AI</title>
+		<link rel="stylesheet"  href="style.css" />
+		<style>
+			canvas{
+            
+            background-size:     cover;                      
+            background-repeat:   no-repeat;
+          background-position:center;
+        }
+		</style>
+		<style>
+			.slidecontainer {
+				width: 100%;
+			}
+
+			.slider {
+				-webkit-appearance: none;
+				width: 260px;
+				height: 15px;
+				border-radius: 15px;
+				
+				background: #d3d3d3;
+				outline: none;
+				opacity: 0.7;
+				-webkit-transition: .2s;
+				transition: opacity .2s;
+			}
+
+			.slider:hover {
+				opacity: 1;
+			}
+
+			.slider::-webkit-slider-thumb {
+				-webkit-appearance: none;
+				appearance: none;
+				width: 25px;
+				height: 25px;
+				background: RED;
+				border-radius: 15px;
+				cursor: pointer;
+			}
+
+			.slider::-moz-range-thumb {
+				width: 25px;
+				height: 25px;
+				background: RED;
+				
+				cursor: pointer;
+				background: #4863fa;
+			}
+			p {
+				display: block;
+				color: white;
+				margin-block-start: 1em;
+				margin-block-end: 1em;
+				margin-inline-start: 0px;
+				margin-inline-end: 0px;
+			}
+
+		</style>
+	</head>
+	<body>
+	<div>
+		<canvas
+			id="canvas" width="1500" height="1400">
+	</canvas>
+	</div>
+			<div>
+				<div id="set">
+					<h2>Inputs</h2>
+					<table>
+						<div class="slidecontainer">
+							<input type="range" min="0" max="100" value="0" class="slider" id="myRange">
+							<p>Learning Rate: <span id="demo"></span></p>
+						</div>
+						<script>
+							var slider = document.getElementById("myRange");
+							var output = document.getElementById("demo");
+							output.innerHTML = slider.value;
+
+							slider.oninput = function() {
+								output.innerHTML = (this.value)/100;
+							}
+						</script>
+
+							<tr>
+								<td><h4>#
+									of iterations </h4></td>
+								<td>
+								<input type="text" id="mnot" ></input>
+								</td>
+							</tr>
+						</table>
+						<h1>------------------------------</h1>
+					<h2>Add Points</h2>
+					<button   onclick="green()" id="green">Green</button>
+					<button  onclick="red()" id="red">Red</button>
+					<button onclick="blue()" id="blue">Blue</button>
+					<button onclick="black()" id="black">Black</button>
+					<h1>------------------------------</h1>
+					<button style="display: block;" onclick="solve()" id="a">Learn</button>
+					<button  style="display: block;" onclick="location.reload()" id="b">Clear</button>
+					<script>
+					
+	
+	                  var countda=0;
+						function getWindowToCanvas(canvas, e) {
+							e = e || window.event;
+							var target = e.target || e.srcElement,
+									style = target.currentStyle || window.getComputedStyle(target, null),
+									borderLeftWidth = parseInt(style["borderLeftWidth"], 10),
+									borderTopWidth = parseInt(style["borderTopWidth"], 10),
+									rect = target.getBoundingClientRect(),
+									offsetX = e.clientX - borderLeftWidth - rect.left,
+									offsetY = e.clientY - borderTopWidth - rect.top;
+							let x = (offsetX * target.width) / target.clientWidth;
+							let y = (offsetY * target.height) / target.clientHeight;
+							const ctx = canvas.getContext("2d");
+							var transform = ctx.getTransform();
+							const invMat = transform.invertSelf();
+							return {
+								x: x * invMat.a + y * invMat.c + invMat.e,
+								y: x * invMat.b + y * invMat.d + invMat.f
+							};
+						}
+						function green(){
+							window.onclick = function DrawGreen(e) {
+								var evt = window.event || e;
+								var X = evt.clientX;
+								var Y = evt.clientY;
+									if (((X > 650) && (X < 1200)) && ((Y > 90) && (Y < 650))) {
+										cX = getWindowToCanvas(tcanvas, e).x;
+										cY = getWindowToCanvas(tcanvas, e).y;
+										ctx.beginPath();
+										ctx.arc(cX, cY, 12, 0, 2 * Math.PI);
+										ctx.fillStyle = "#008000";
+										ctx.strokeStyle = "#000000";
+										ctx.closePath();
+										ctx.fill();
+										ctx.lineWidth = 1;
+										ctx.stroke();
+										greenarrx[greencounter] = cX;
+										greenarry[greencounter] = cY;
+										greencounter++;
+										datax1[countda]=parseInt(cX);
+										datax2[countda]=parseInt(cY);
+										dataDiserd [countda]=1;
+										countda++;
+										
+									}
+						}
+						}
+						function red() {
+							window.onclick = function Drawred(e) {
+								var evt = window.event || e;
+								var X = evt.clientX;
+								var Y = evt.clientY;
+								if (((X > 650) && (X < 1200)) && ((Y > 90) && (Y < 650))) {
+									cX = getWindowToCanvas(tcanvas, e).x;
+									cY = getWindowToCanvas(tcanvas, e).y;
+									ctx.beginPath();
+									ctx.arc(cX, cY, 12, 0, 2 * Math.PI);
+									ctx.fillStyle = "#f30000";
+									ctx.strokeStyle = "#000000";
+									ctx.closePath();
+									ctx.fill();
+									ctx.lineWidth = 1;
+									ctx.stroke();
+									redarrx[redcounter] = cX;
+									redarry[redcounter]=cY;
+									redcounter++;
+
+									datax1[countda]=parseInt(cX);
+										datax2[countda]=parseInt(cY);
+										dataDiserd [countda]=2;
+										countda++;
+								}
+							}
+						}
+						function blue() {
+							window.onclick = function Drawblue(e) {
+								var evt = window.event || e;
+								var X = evt.clientX;
+								var Y = evt.clientY;
+								if (((X > 650) && (X < 1200)) && ((Y > 90) && (Y < 650))) {
+									cX = getWindowToCanvas(tcanvas, e).x;
+									cY = getWindowToCanvas(tcanvas, e).y;
+									ctx.beginPath();
+									ctx.arc(cX, cY, 12, 0, 2 * Math.PI);
+									ctx.fillStyle = "#0000FF";
+									ctx.strokeStyle = "#000000";
+									ctx.closePath();
+									ctx.fill();
+									ctx.lineWidth = 1;
+									ctx.stroke();
+									bluearrx[bluecounter] = cX;
+									bluearry[bluecounter] = cY;
+
+									bluecounter++;
+
+									datax1[countda]=parseInt(cX);
+										datax2[countda]=parseInt(cY);
+										dataDiserd [countda]=3;
+										countda++;
+								}
+							}
+						}
+					  function black() {
+						  window.onclick = function Drawblue(e) {
+							  var evt = window.event || e;
+							  var X = evt.clientX;
+							  var Y = evt.clientY;
+							  if (((X > 650) && (X < 1200)) && ((Y > 90) && (Y < 650))) {
+								  cX = getWindowToCanvas(tcanvas, e).x;
+								  cY = getWindowToCanvas(tcanvas, e).y;
+								  ctx.beginPath();
+								  ctx.arc(cX, cY, 12, 0, 2 * Math.PI);
+								  ctx.fillStyle = "#000000";
+								  ctx.strokeStyle = "#000000";
+								  ctx.closePath();
+								  ctx.fill();
+								  ctx.lineWidth = 1;
+								  ctx.stroke();
+								  blackarrx[blackcounter] = cX;
+								  blackarry[blackcounter] = cY;
+								  blackcounter++;
+								  datax1[countda]=parseInt(cX);
+								  datax2[countda]=parseInt(cY);
+								  dataDiserd [countda]=4;
+								  countda++;
+							  }
+						  }
+					  }
+					</script>
+					</div>
+				</div>
+			</div>
+		<script  src="script.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	</body>
+</html>
